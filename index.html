@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Malaria Incidence Rate and Mortality Rate in Nigeria (2020)</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Malaria_Mortality_Rate_1.js"></script>
+        <script src="data/Malaria_Incidence_Rate_2.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[2.63493512717101,0.7883560333263562],[14.237685857712636,15.495862926688794]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_ESRIGraydark_0');
+        map.getPane('pane_ESRIGraydark_0').style.zIndex = 400;
+        var layer_ESRIGraydark_0 = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_ESRIGraydark_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_ESRIGraydark_0;
+        map.addLayer(layer_ESRIGraydark_0);
+        function pop_Malaria_Mortality_Rate_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State name</th>\
+                        <td>' + (feature.properties['statename'] !== null ? autolinker.link(feature.properties['statename'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Mortality rate</th>\
+                        <td>' + (feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] !== null ? autolinker.link(feature.properties['Nigeria Malaria Project csvv_Mortality Rate'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Malaria_Mortality_Rate_1_0(feature) {
+            if (feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] >= 67.130000 && feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] <= 87.850000 ) {
+                return {
+                pane: 'pane_Malaria_Mortality_Rate_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] >= 87.850000 && feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] <= 108.570000 ) {
+                return {
+                pane: 'pane_Malaria_Mortality_Rate_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,170,170,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] >= 108.570000 && feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] <= 129.290000 ) {
+                return {
+                pane: 'pane_Malaria_Mortality_Rate_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,85,85,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] >= 129.290000 && feature.properties['Nigeria Malaria Project csvv_Mortality Rate'] <= 150.010000 ) {
+                return {
+                pane: 'pane_Malaria_Mortality_Rate_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Malaria_Mortality_Rate_1');
+        map.getPane('pane_Malaria_Mortality_Rate_1').style.zIndex = 401;
+        map.getPane('pane_Malaria_Mortality_Rate_1').style['mix-blend-mode'] = 'normal';
+        var layer_Malaria_Mortality_Rate_1 = new L.geoJson(json_Malaria_Mortality_Rate_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Malaria_Mortality_Rate_1',
+            layerName: 'layer_Malaria_Mortality_Rate_1',
+            pane: 'pane_Malaria_Mortality_Rate_1',
+            onEachFeature: pop_Malaria_Mortality_Rate_1,
+            style: style_Malaria_Mortality_Rate_1_0,
+        });
+        bounds_group.addLayer(layer_Malaria_Mortality_Rate_1);
+        map.addLayer(layer_Malaria_Mortality_Rate_1);
+        function pop_Malaria_Incidence_Rate_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State name</th>\
+                        <td>' + (feature.properties['statename'] !== null ? autolinker.link(feature.properties['statename'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Incidence rate</th>\
+                        <td>' + (feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] !== null ? autolinker.link(feature.properties['Nigeria Malaria Project csvv_Incidence Rate'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Malaria_Incidence_Rate_2_0(feature) {
+            if (feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] >= 174.620000 && feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] <= 231.020000 ) {
+                return {
+                pane: 'pane_Malaria_Incidence_Rate_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] >= 231.020000 && feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] <= 287.420000 ) {
+                return {
+                pane: 'pane_Malaria_Incidence_Rate_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,170,170,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] >= 287.420000 && feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] <= 343.820000 ) {
+                return {
+                pane: 'pane_Malaria_Incidence_Rate_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,85,85,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] >= 343.820000 && feature.properties['Nigeria Malaria Project csvv_Incidence Rate'] <= 400.220000 ) {
+                return {
+                pane: 'pane_Malaria_Incidence_Rate_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Malaria_Incidence_Rate_2');
+        map.getPane('pane_Malaria_Incidence_Rate_2').style.zIndex = 402;
+        map.getPane('pane_Malaria_Incidence_Rate_2').style['mix-blend-mode'] = 'normal';
+        var layer_Malaria_Incidence_Rate_2 = new L.geoJson(json_Malaria_Incidence_Rate_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Malaria_Incidence_Rate_2',
+            layerName: 'layer_Malaria_Incidence_Rate_2',
+            pane: 'pane_Malaria_Incidence_Rate_2',
+            onEachFeature: pop_Malaria_Incidence_Rate_2,
+            style: style_Malaria_Incidence_Rate_2_0,
+        });
+        bounds_group.addLayer(layer_Malaria_Incidence_Rate_2);
+        map.addLayer(layer_Malaria_Incidence_Rate_2);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Malaria Incidence Rate and Mortality Rate in Nigeria (2020)</h2>';
+            };
+            title.addTo(map);
+            var abstract = new L.Control({'position':'bottomleft'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+                    this._div.setAttribute("onmouseenter", "abstract.show()");
+                    this._div.setAttribute("onmouseleave", "abstract.hide()");
+                    this.hide();
+                    return this._div;
+                };
+                abstract.hide = function () {
+                    this._div.classList.remove("abstractUncollapsed");
+                    this._div.classList.add("abstract");
+                    this._div.innerHTML = 'i'
+                }
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'This web map shows the spatial mapping of the incidence rate and mortality rate of malaria (specifically plasmodium falciparum parasite) across Nigeria. The two rates are overlain so the user can turn the topmost layer on and off to see the change between the incidence and mortality.<br /><br />IncidenceRate is the number of newly diagnosed Plasmodium vivax cases per 1,000 population, in a given year, while the  Mortality Rate is the number of deaths from Plasmodium falciparum per 100,000 population during a defined year.<br /><br />Source: THE MALARIA ATLAS PROJECT<br />';
+            };
+            abstract.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Malaria_Incidence_Rate<br /><table><tr><td style="text-align: center;"><img src="legend/Malaria_Incidence_Rate_2_1752310.png" /></td><td>175 - 231</td></tr><tr><td style="text-align: center;"><img src="legend/Malaria_Incidence_Rate_2_2312871.png" /></td><td>231 - 287</td></tr><tr><td style="text-align: center;"><img src="legend/Malaria_Incidence_Rate_2_2873442.png" /></td><td>287 - 344</td></tr><tr><td style="text-align: center;"><img src="legend/Malaria_Incidence_Rate_2_3444003.png" /></td><td>344 - 400</td></tr></table>': layer_Malaria_Incidence_Rate_2,'Malaria_Mortality_Rate<br /><table><tr><td style="text-align: center;"><img src="legend/Malaria_Mortality_Rate_1_67880.png" /></td><td>67 - 88</td></tr><tr><td style="text-align: center;"><img src="legend/Malaria_Mortality_Rate_1_881091.png" /></td><td>88 - 109</td></tr><tr><td style="text-align: center;"><img src="legend/Malaria_Mortality_Rate_1_1091292.png" /></td><td>109 - 129</td></tr><tr><td style="text-align: center;"><img src="legend/Malaria_Mortality_Rate_1_1291503.png" /></td><td>129 - 150</td></tr></table>': layer_Malaria_Mortality_Rate_1,"ESRI Gray (dark)": layer_ESRIGraydark_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_Malaria_Mortality_Rate_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['statename'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['statename']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Malaria_Mortality_Rate_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_Malaria_Incidence_Rate_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['statename'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['statename']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Malaria_Incidence_Rate_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_Malaria_Mortality_Rate_1,layer_Malaria_Incidence_Rate_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Malaria_Mortality_Rate_1,layer_Malaria_Incidence_Rate_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Malaria_Mortality_Rate_1,layer_Malaria_Incidence_Rate_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Malaria_Mortality_Rate_1,layer_Malaria_Incidence_Rate_2]);
+        });
+        </script>
+    </body>
+</html>
